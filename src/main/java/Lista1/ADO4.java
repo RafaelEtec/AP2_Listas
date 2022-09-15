@@ -13,19 +13,51 @@ public class ADO4 {
     final static Scanner inp = new Scanner(System.in);
     
     public static void main(String[] args) {
-        int sal = recebeSalario();
-        System.out.println(sal);
+        double sal = recebeSalario();
+        double pedeEmpr = pedeEmprestimo();
+        double maxEmpr = calculaEmprestimoMaximo(sal);
+        
+        validaEmprestimo(sal, pedeEmpr, maxEmpr);
     }
     
-    public static int recebeSalario() {
+    public static void validaEmprestimo(double sal, double pedeEmpr, double maxEmpr) {
+        String msgInfo = "Salário: " + sal + "\nEmpréstimo permitido: " + maxEmpr + "\nValor Pedido: " + pedeEmpr;
+        String[] msgVal = new String[]{"Não é possível lhe conceder o Empréstimo!", "Empréstimo aceito!"};
+        
+        System.out.println(msgInfo);
+        if (pedeEmpr > maxEmpr) {
+            System.out.println(msgVal[0]);
+        } else {
+            System.out.println(msgVal[1]);
+        }
+    }
+    
+    public static double pedeEmprestimo() {
+        String msgEmpr = "Informe o valor do empréstimo: ", msgErro = "Inválido! \nInforme novamente: ";
+        
+        System.out.println(msgEmpr);
+        double empr = inp.nextDouble();
+        while (empr <= 0) {
+            System.out.println(msgErro);
+            empr = inp.nextDouble();
+        }
+        return empr;
+    }
+    
+    public static double recebeSalario() {
         String msgSal = "Informe seu salário: ", msgErro = "Inválido! \nInforme novamente: ";
         
         System.out.println(msgSal);
-        int sal = inp.nextInt();
+        double sal = inp.nextDouble();
         while (sal <= 0) {
             System.out.println(msgErro);
-            sal = inp.nextInt();
+            sal = inp.nextDouble();
         }
         return sal;
+    }
+    
+    public static double calculaEmprestimoMaximo(double sal) {
+        double maxEmpr = sal * 0.30;
+        return maxEmpr;
     }
 }
